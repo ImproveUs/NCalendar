@@ -18,6 +18,7 @@ import necer.ncalendardemo.R;
 
 /**
  * Created by necer on 2017/6/15.
+ * 这里阅读周视图
  */
 
 public class WeekCalendarActivity extends AppCompatActivity implements View.OnClickListener {
@@ -39,18 +40,18 @@ public class WeekCalendarActivity extends AppCompatActivity implements View.OnCl
 
         tv_today.setOnClickListener(this);
         iv_finish.setOnClickListener(this);
-
+        //设置视图日期点击回调
         weekCalendar.setOnClickWeekCalendarListener(new OnClickWeekCalendarListener() {
             @Override
             public void onClickWeekCalendar(DateTime dateTime) {
                 Toast.makeText(WeekCalendarActivity.this, "选择了：：" + dateTime.toLocalDate(), Toast.LENGTH_SHORT).show();
             }
         });
+        //设置视图切换日期回调
         weekCalendar.setOnWeekCalendarPageChangeListener(new OnWeekCalendarPageChangeListener() {
             @Override
             public void onWeekCalendarPageSelected(DateTime dateTime) {
                 tv_title.setText(dateTime.getYear() + "年" + dateTime.getMonthOfYear() + "月");
-
             }
         });
 
@@ -60,8 +61,9 @@ public class WeekCalendarActivity extends AppCompatActivity implements View.OnCl
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.tv_today:
+                //回到当前日期
                 DateTime dateTime = new DateTime();
-                weekCalendar.setDate(dateTime.getYear(), dateTime.getMonthOfYear(), dateTime.getDayOfMonth(),true);
+                weekCalendar.setDate(dateTime.getYear(), dateTime.getMonthOfYear(), dateTime.getDayOfMonth(), true);
 
                 break;
             case R.id.iv_finish:

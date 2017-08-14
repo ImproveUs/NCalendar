@@ -7,14 +7,16 @@ import android.view.View;
 
 import necer.ncalendardemo.R;
 
+/**
+ * 主界面即入口  没啥说的(～￣▽￣)～
+ */
 public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState)  ;
+        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
     }
-
 
     public void month(View view) {
         startActivity(new Intent(this, MonthCalendarActivity.class));

@@ -50,6 +50,7 @@ public class Utils {
     public static int getDisplayWidth(Context context) {
         return context.getResources().getDisplayMetrics().widthPixels;
     }
+
     /**
      * 屏幕高度
      *
@@ -103,6 +104,7 @@ public class Utils {
 
     /**
      * 获得两个日期距离几周
+     *
      * @param dateTime1
      * @param dateTime2
      * @return
@@ -211,7 +213,12 @@ public class Utils {
         return calendar;
     }
 
-    //转化一周从周日开始
+    /**
+     * 转化一周从周日开始
+     *
+     * @param dateTime
+     * @return
+     */
     public static DateTime getSunFirstDayOfWeek(DateTime dateTime) {
         if (dateTime.dayOfWeek().get() == 7) {
             return dateTime;

@@ -1,18 +1,23 @@
 package com.necer.ncalendar.adapter;
+
 import android.content.Context;
 import android.support.v4.view.PagerAdapter;
 import android.util.SparseArray;
 import android.view.View;
 import android.view.ViewGroup;
+
 import com.necer.ncalendar.view.CalendarView;
+
 import org.joda.time.DateTime;
+
 import java.util.List;
 
 /**
  * Created by necer on 2017/6/13.
+ * 适配器抽象类
  */
 
-public abstract class CalendarAdapter extends PagerAdapter{
+public abstract class CalendarAdapter extends PagerAdapter {
 
     protected Context mContext;
     protected int mCount;//总页数
@@ -21,6 +26,14 @@ public abstract class CalendarAdapter extends PagerAdapter{
     protected DateTime mDateTime;
     protected List<String> mPointList;
 
+    /**
+     * 构造方法
+     * @param context       上下文
+     * @param count
+     * @param curr
+     * @param dateTime
+     * @param pointList
+     */
     public CalendarAdapter(Context context, int count, int curr, DateTime dateTime, List<String> pointList) {
         this.mDateTime = dateTime;
         this.mContext = context;
@@ -29,6 +42,7 @@ public abstract class CalendarAdapter extends PagerAdapter{
         this.mPointList = pointList;
         mCalendarViews = new SparseArray<>();
     }
+
     @Override
     public int getCount() {
         return mCount;
@@ -38,6 +52,7 @@ public abstract class CalendarAdapter extends PagerAdapter{
     public boolean isViewFromObject(View view, Object object) {
         return view == object;
     }
+
     @Override
     public void destroyItem(ViewGroup container, int position, Object object) {
         //super.destroyItem(container, position, object);

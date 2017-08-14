@@ -26,6 +26,7 @@
 
     <include layout="@layout/layout_week_num"/>
 
+    <!--这里直接定高50dp-->
     <com.necer.ncalendar.calendar.WeekCalendar
         android:id="@+id/weekCalendar"
         android:layout_width="match_parent"

@@ -20,12 +20,12 @@ import java.util.List;
 
 /**
  * Created by necer on 2017/6/13.
+ * 周视图
  */
 public class WeekCalendar extends CalendarViewPager implements OnClickWeekViewListener {
 
     private OnClickWeekCalendarListener onClickWeekCalendarListener;
     private OnWeekCalendarPageChangeListener onWeekCalendarPageChangeListener;
-
 
     public WeekCalendar(Context context) {
         this(context, null);
@@ -37,7 +37,7 @@ public class WeekCalendar extends CalendarViewPager implements OnClickWeekViewLi
 
     @Override
     protected CalendarAdapter getCalendarAdapter(List<String> pointList) {
-
+        //
         DateTime startSunFirstDayOfWeek = Utils.getSunFirstDayOfWeek(startDateTime);
         DateTime endSunFirstDayOfWeek = Utils.getSunFirstDayOfWeek(endDateTime);
         DateTime todaySunFirstDayOfWeek = Utils.getSunFirstDayOfWeek(DateTime.now());
