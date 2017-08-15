@@ -107,14 +107,14 @@ public class Utils {
      *
      * @param dateTime1
      * @param dateTime2
-     * @return
+     * @return      返回两个时间相距多少周
      */
     public static int getIntervalWeek(DateTime dateTime1, DateTime dateTime2) {
+        //这个思路很简单  获取两个时间对应于每周的第一天
         DateTime sunFirstDayOfWeek1 = getSunFirstDayOfWeek(dateTime1);
         DateTime sunFirstDayOfWeek2 = getSunFirstDayOfWeek(dateTime2);
+        //计算时间差  *这里可以了解到 joda.time是会单独提供操作时间,年,月,天,时,分,秒的工具类的(奶奶的  果真有)
         int days = Days.daysBetween(sunFirstDayOfWeek1, sunFirstDayOfWeek2).getDays();
-
-
         if (days > 0) {
             return (days + 1) / 7;
         } else if (days < 0) {
@@ -126,7 +126,8 @@ public class Utils {
 
 
     /**
-     * 是否是今天
+     * 传入的日期是否为今天,这个有意思,先将日期转为年表,在使用其复写的
+     * equals方法判断的
      *
      * @param dateTime
      * @return
@@ -191,20 +192,20 @@ public class Utils {
      * 周视图的数据
      *
      * @param dateTime
-     * @return
+     * @return  返回一周的公历,农历数据集,*这里的格式化数据集localDateList为空
      */
     public static NCalendar getWeekCalendar(DateTime dateTime) {
-        List<DateTime> dateTimeList = new ArrayList<>();
-        List<String> lunarStringList = new ArrayList<>();
-
+        List<DateTime> dateTimeList = new ArrayList<>();//公历显示数据集
+        List<String> lunarStringList = new ArrayList<>();//农历显示数据集
+        //1: 获取当前时间对应的一周的第一天
         dateTime = getSunFirstDayOfWeek(dateTime);
+        //2: 创建一个封装类
         NCalendar calendar = new NCalendar();
+        //3:初始化公历和农历的数据集
         for (int i = 0; i < 7; i++) {
             DateTime dateTime1 = dateTime.plusDays(i);
-
             LunarCalendarUtils.Lunar lunar = LunarCalendarUtils.solarToLunar(new LunarCalendarUtils.Solar(dateTime1.getYear(), dateTime1.getMonthOfYear(), dateTime1.getDayOfMonth()));
             String lunarDayString = LunarCalendarUtils.getLunarDayString(dateTime1.getYear(), dateTime1.getMonthOfYear(), dateTime1.getDayOfMonth(), lunar.lunarYear, lunar.lunarMonth, lunar.lunarDay, lunar.isLeap);
-
             dateTimeList.add(dateTime1);
             lunarStringList.add(lunarDayString);
         }
@@ -215,6 +216,14 @@ public class Utils {
 
     /**
      * 转化一周从周日开始
+     * 奶奶的  这里不太好理解,由于美国时间是从周一开始的
+     * 如果2017年8月15号是星期二,那么这一周的第一天就是14号->星期一
+     * 方法dateTime.withDayOfWeek(1).toString("dd')=14
+     * 在编辑日历时我需要每一周的时间从周日开始,理论上获取的这一周的第一天时间应该是13号->星期天
+     * 这样的dateTime.withDayOfWeek(0).toString("dd')=13,这样执行方法又会报错,参数不能是0;
+     * 所以就有了这个方法:如果今天是星期天(*每一周的第一天从1开始不是从0开始,相当于数组下标为1),
+     * 这就不用管直接返回今天,如果今天不是星期天,比如星期二,那么久先退7天再加7天:minusWeeks(1).withDayOfWeek(7)
+     * 相当于withDayOfWeek(0)取到星期天的日期.
      *
      * @param dateTime
      * @return
@@ -228,7 +237,7 @@ public class Utils {
     }
 
 
-    //包含农历,公历,格式化的日期
+    //包含农历,公历,格式化的日期 这个封装思想 不得不赞啊~\(≧▽≦)/~
     public static class NCalendar {
         public List<DateTime> dateTimeList;
         public List<String> lunarList;

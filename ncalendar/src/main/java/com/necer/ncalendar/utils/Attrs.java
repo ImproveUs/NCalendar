@@ -2,6 +2,7 @@ package com.necer.ncalendar.utils;
 
 /**
  * Created by necer on 2017/6/13.
+ * 封装类,封装了自定义属性
  */
 
 public class Attrs {

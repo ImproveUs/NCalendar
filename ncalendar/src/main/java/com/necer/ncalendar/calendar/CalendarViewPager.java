@@ -8,13 +8,11 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.util.SparseArray;
 import android.view.MotionEvent;
-import android.view.View;
 import android.view.ViewTreeObserver;
 
 import com.necer.ncalendar.R;
 import com.necer.ncalendar.adapter.CalendarAdapter;
 import com.necer.ncalendar.utils.Attrs;
-import com.necer.ncalendar.utils.MyLog;
 import com.necer.ncalendar.utils.Utils;
 import com.necer.ncalendar.view.CalendarView;
 
@@ -132,8 +130,23 @@ public abstract class CalendarViewPager extends ViewPager {
      */
     protected abstract void initCurrentCalendarView();
 
+    /**
+     * 这里还有一个方法直接跳转到指定时间  比如回到选择的日期
+     *
+     * @param year
+     * @param month
+     * @param day
+     * @param smoothScroll
+     */
     public abstract void setDate(int year, int month, int day, boolean smoothScroll);
 
+    /**
+     * 向外提供一个跳转方法  比如回到今天
+     *
+     * @param dateTime
+     * @param smoothScroll
+     * @return
+     */
     public abstract int jumpDate(DateTime dateTime, boolean smoothScroll);
 
     public DateTime getSelectDateTime() {
@@ -158,7 +171,6 @@ public abstract class CalendarViewPager extends ViewPager {
 
     public void setPointList(List<String> pointList) {
         //全部页面重绘
-
         mPointList.clear();
         mPointList.addAll(pointList);
         SparseArray<CalendarView> calendarViews = calendarAdapter.getCalendarViews();

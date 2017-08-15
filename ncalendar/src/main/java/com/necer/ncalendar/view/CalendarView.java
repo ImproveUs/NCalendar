@@ -14,10 +14,11 @@ import java.util.List;
 
 /**
  * Created by necer on 2017/6/9.
+ * 日历视图的封装类,保证周视图和月视图的显示,效果一致
+ * 这个类对所有的自定义数据做了说明
  */
 
 public abstract class CalendarView extends View {
-
 
     protected DateTime mSelectDateTime;//被选中的datetime
     protected DateTime mInitialDateTime;//初始传入的datetime，
@@ -41,16 +42,12 @@ public abstract class CalendarView extends View {
     protected int mHollowCircleColor;//空心圆颜色
     protected int mHollowCircleStroke;//空心圆粗细
 
-
     protected int mWidth;
     protected int mHeight;
 
-
-
-
     public CalendarView(Context context) {
         super(context);
-
+        //1:这里有意思哈,由于自定义数据再CalendarViewPager初始化时就已经定义好了   这里都不设置为单例了
         mSolarTextColor = Attrs.solarTextColor;
         mLunarTextColor = Attrs.lunarTextColor;
         mHintColor = Attrs.hintColor;
@@ -65,17 +62,16 @@ public abstract class CalendarView extends View {
         mHollowCircleColor = Attrs.hollowCircleColor;
         mHollowCircleStroke = Attrs.hollowCircleStroke;
 
-
         mRectList = new ArrayList<>();
         //mPointList = new ArrayList<>();
+        //2:初始化公历和农历画笔
         mSorlarPaint = getPaint(mSolarTextColor, mSolarTextSize);
         mLunarPaint = getPaint(mLunarTextColor, mLunarTextSize);
-
-
     }
 
     public CalendarView(Context context,List<String> pointList) {
         this(context);
+        //这里讲圆点集合设置进来
         mPointList = pointList;
     }
 
