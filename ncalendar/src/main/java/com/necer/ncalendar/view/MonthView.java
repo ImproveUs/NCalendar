@@ -17,6 +17,8 @@ import java.util.List;
 
 /**
  * Created by necer on 2017/6/9.
+ * 月视图和周视图的{@link WeekView}实现原理基本是一样的  只是绘制单元变多,点击单元判断多了
+ * 对于月视图  这里只关注下绘制过程
  */
 
 public class MonthView extends CalendarView {
@@ -27,11 +29,10 @@ public class MonthView extends CalendarView {
     private OnClickMonthViewListener onClickMonthViewListener;
 
 
-    public MonthView(Context mContext, DateTime dateTime, OnClickMonthViewListener onClickMonthViewListener,List<String> pointList) {
-        super(mContext,pointList);
+    public MonthView(Context mContext, DateTime dateTime, OnClickMonthViewListener onClickMonthViewListener, List<String> pointList) {
+        super(mContext, pointList);
         this.mInitialDateTime = dateTime;
         this.onClickMonthViewListener = onClickMonthViewListener;
-
         Utils.NCalendar monthCalendar = Utils.getMonthCalendar(dateTime);
         lunarList = monthCalendar.lunarList;
         localDateList = monthCalendar.localDateList;
@@ -44,7 +45,7 @@ public class MonthView extends CalendarView {
         mWidth = getWidth();
         mHeight = getHeight();
         mRectList.clear();
-        //6行7列
+        //7列*6行二维矩阵
         for (int i = 0; i < 6; i++) {
             for (int j = 0; j < 7; j++) {
                 Rect rect = new Rect(j * mWidth / 7, i * mHeight / 6, j * mWidth / 7 + mWidth / 7, i * mHeight / 6 + mHeight / 6);
@@ -74,8 +75,8 @@ public class MonthView extends CalendarView {
                         canvas.drawText(dateTime.getDayOfMonth() + "", rect.centerX(), baseline, mSorlarPaint);
                         drawLunar(canvas, rect, mLunarTextColor, i, j);
                     }
-
                 } else {
+                    //这里绘制非当前月的单元
                     mSorlarPaint.setColor(mHintColor);
                     canvas.drawText(dateTime.getDayOfMonth() + "", rect.centerX(), baseline, mSorlarPaint);
                     drawLunar(canvas, rect, mHintColor, i, j);

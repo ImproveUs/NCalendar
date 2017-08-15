@@ -20,15 +20,12 @@ import java.util.List;
 
 /**
  * Created by necer on 2017/6/12.
- * 月视图日历
+ * 月视图日历  阅读完周视图{@link WeekCalendar}  这个月视图应该不难了
  */
-
 public class MonthCalendar extends CalendarViewPager implements OnClickMonthViewListener {
-
 
     private OnClickMonthCalendarListener onClickMonthCalendarListener;
     private OnMonthCalendarPageChangeListener onMonthCalendarPageChangeListener;
-
 
     public MonthCalendar(Context context) {
         this(context, null);
@@ -40,6 +37,7 @@ public class MonthCalendar extends CalendarViewPager implements OnClickMonthView
 
     @Override
     protected CalendarAdapter getCalendarAdapter(List<String> pointList) {
+        //嗯   思想一样
         mPageSize = Months.monthsBetween(startDateTime, endDateTime).getMonths() + 1;
         mCurrPage = Months.monthsBetween(startDateTime, DateTime.now()).getMonths();
         return new MonthCalendarAdapter(getContext(), mPageSize, mCurrPage, new DateTime(), this, pointList);

@@ -12,6 +12,7 @@ import java.util.List;
 
 /**
  * Created by necer on 2017/6/12.
+ * 这个和周视图的实现思路一样{@link WeekCalendarAdapter}
  */
 
 public class MonthCalendarAdapter extends CalendarAdapter{
