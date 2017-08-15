@@ -18,6 +18,7 @@ import necer.ncalendardemo.adapter.AAAdapter;
 
 /**
  * Created by necer on 2017/6/15.
+ * 周视图和月视图的切换视图   作者是采用新的自定义控件实现的
  */
 
 public class MonthAndWeekCalendarActivity extends AppCompatActivity {
@@ -30,23 +31,18 @@ public class MonthAndWeekCalendarActivity extends AppCompatActivity {
         setContentView(R.layout.activity_wm);
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         mwCalendar = (MWCalendar) findViewById(R.id.mWCalendar);
-
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(new AAAdapter(this));
-
         mwCalendar.setOnClickCalendarListener(new OnCalendarChangeListener() {
             @Override
             public void onClickCalendar(DateTime dateTime) {
                 MyLog.d("dateTime::" + dateTime.toLocalDate());
-
             }
 
             @Override
             public void onCalendarPageChanged(DateTime dateTime) {
-
             }
         });
-
     }
 
     public void close(View view) {
