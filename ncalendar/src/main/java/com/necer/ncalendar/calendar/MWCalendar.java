@@ -217,6 +217,8 @@ public class MWCalendar extends LinearLayout implements NestedScrollingParent//�
 
     @Override
     public void scrollTo(int x, int y) {
+//        Log.i(TAG, "scrollTo: ");
+        //滑动到指定位置   这里还做了个参数修正
         if (y < 0) {
             y = 0;
         }
@@ -230,23 +232,29 @@ public class MWCalendar extends LinearLayout implements NestedScrollingParent//�
 
     @Override
     public void computeScroll() {
+//        Log.i(TAG, "computeScroll: ");
         int scrollY = getScrollY();
         if (scrollY == 0) {
+            //1:滑动计算 如果已滑动到底部,即月视图展开 ,就隐藏掉周视图(为啥周视图在这个时候才隐藏呢)
             STATE = OPEN;
             weekCalendar.setVisibility(INVISIBLE);
         } else if (scrollY == 5 * rowHeigh) {
+            //2:如果滑动到顶部就显示周视图
             STATE = CLOSE;
             weekCalendar.setVisibility(VISIBLE);
         } else {
+            //3:上面两者都不是,就说明处于滑动中间状态
             DateTime selectDateTime = weekCalendar.getSelectDateTime();
             DateTime initialDateTime = weekCalendar.getInitialDateTime();
+            //4:获取选中或是初始化的日期(由于需要定位周视图在月视图的显示位置   这里取得就是周视图的日期)
             DateTime dateTime = selectDateTime == null ? initialDateTime : selectDateTime;
-
+            //5:获取月视图中对应的周视图日期位置并控制其显示时机
             MonthView currentCalendarView = (MonthView) monthCalendar.getCurrentCalendarView();
             int weekRow = currentCalendarView.getWeekRow(dateTime);
+            //6: 不得不佩服 作者的思想,这里是控制周视图显示\隐藏的关键,从而让视图平滑切换
             weekCalendar.setVisibility(scrollY >= weekRow * rowHeigh ? VISIBLE : INVISIBLE);
         }
-
+        //这个就不解释了  滑动嘛
         if (mScroller.computeScrollOffset()) {
             scrollTo(0, mScroller.getCurrY());
             invalidate();
